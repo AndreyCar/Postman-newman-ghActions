@@ -10,13 +10,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-
-      # INstall Node on the runner
+      # Install Node on the runner
       - name: Install Node
         uses: actions/setup-node@v1
         with:
           node-version: "16.x"
 
+      # Install dependencies
+      - name: Install dependencies
+        run: npm i
 
       # Install the newman command line utility and also install the html extra reporter
       - name: Install newman
@@ -24,15 +26,17 @@ jobs:
           npm install -g newman
           npm install -g newman-reporter-htmlextra
 
+      # Run local server
+      - name: Run local server
+        run: npm run tern-on-api
 
       # Make directory to upload the test results
       - name: Make Directory for results
         run: mkdir -p testResults
 
-
       # Run the POSTMAN collection
       - name: Run POSTMAN collection
-        run: newman run store.postman_collection.json -r htmlextra --reporter-htmlextra-export ./testResults/htmlreport.html
+        run: newman run store.postman_collection.json -r htmlextra --reporter-htmlextra-export testResults/htmlreport.html --reporter-htmlextra-darkTheme  > testResults/runreport1.html
 
       # Upload the contents of Test Results directory to workspace
       - name: Output the run Details
