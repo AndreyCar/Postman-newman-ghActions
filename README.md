@@ -1,5 +1,5 @@
 # Postman + newman + github actions (Simple store template)
-
+## [Report](https://andreycar.github.io/Postman-newman-ghActions/)
 ## Step to run
 1. Clone repo `git clone `
 3. Run `npm i` (install node.js dependencies)
