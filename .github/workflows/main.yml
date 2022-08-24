@@ -4,6 +4,25 @@ on:
     branches:
       - master
 jobs:
+  run-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Install Node on the runner
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm i
+
+      # Run local server
+      - name: Run local server
+        run: npm run tern-on-api
+
   test-api:
     runs-on: ubuntu-latest
     steps:
@@ -25,10 +44,6 @@ jobs:
         run: |
           npm install -g newman
           npm install -g newman-reporter-htmlextra
-
-      # Run local server
-      - name: Run local server
-        run: npm run tern-on-api
 
       # Make directory to upload the test results
       - name: Make Directory for results
